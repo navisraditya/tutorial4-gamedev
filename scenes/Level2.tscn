@@ -1,3 +1,123 @@
-[gd_scene format=2]
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/kenney_platformerpack/Spritesheets/spritesheet_gr_planet.png" type="Texture" id=2]
+[ext_resource path="res://scenes/AreaTrigger.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/kenney_platformerpack/PNG/Enemies/slimePurple.png" type="Texture" id=4]
+[ext_resource path="res://scenes/FallingBox.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/Spawner.gd" type="Script" id=6]
+[ext_resource path="res://assets/kenney_platformerpack/PNG/Enemies/barnacle.png" type="Texture" id=7]
+[ext_resource path="res://scenes/LoseCondition2.gd" type="Script" id=8]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 128, 128, 0, 128, 0, 0, 128, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 128, 128, 0, 128, 0, 0, 128, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+points = PoolVector2Array( 128, 128, 0, 128, 0, 0, 128, 0 )
+
+[sub_resource type="TileSet" id=4]
+0/name = "spritesheet_gr_planet.png 0"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 128, 128 )
+0/tile_mode = 2
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 128, 128 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "spritesheet_gr_planet.png 1"
+1/texture = ExtResource( 2 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 0, 1152, 256 )
+1/tile_mode = 2
+1/autotile/icon_coordinate = Vector2( 0, 0 )
+1/autotile/tile_size = Vector2( 128, 128 )
+1/autotile/spacing = 0
+1/autotile/occluder_map = [  ]
+1/autotile/navpoly_map = [  ]
+1/autotile/priority_map = [  ]
+1/autotile/z_index_map = [  ]
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape = SubResource( 1 )
+1/shape_one_way = false
+1/shape_one_way_margin = 1.0
+1/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 1 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 1, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 2 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 2, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 3 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+1/z_index = 0
 
 [node name="Level2" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( -57, 541 )
+GRAVITY = 500
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 4 )
+format = 1
+tile_data = PoolIntArray( -7, 1, 0, 65523, 1, 0, 131073, 1, 0, 262133, 1, 0, 393211, 1, 0, 458752, 1, 0, 655358, 1, 0 )
+
+[node name="Area2D" parent="." instance=ExtResource( 3 )]
+position = Vector2( -57, 667 )
+scale = Vector2( 151.76, 1 )
+sceneName = "LoseScreen"
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -384, -128 )
+texture = ExtResource( 4 )
+
+[node name="Area2D" parent="Sprite" instance=ExtResource( 3 )]
+position = Vector2( -6.10352e-05, 60 )
+scale = Vector2( 4.38485, 5.82934 )
+sceneName = "WinScreen"
+
+[node name="Spawner" type="Node2D" parent="."]
+position = Vector2( -171, -269 )
+script = ExtResource( 6 )
+obstacle = ExtResource( 5 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+visible = false
+position = Vector2( -640, 129 )
+texture = ExtResource( 7 )
+
+[node name="Area2D" parent="Sprite2" instance=ExtResource( 3 )]
+position = Vector2( 2.00003, 62.9999 )
+scale = Vector2( 4.38485, 5.82934 )
+script = ExtResource( 8 )
+sceneName = "LoseScreen"
